@@ -7,7 +7,7 @@ import java.util.Set;
 public class Taller4 {
 
     // Función para generar los nombres de las casas y precios
-    static HashMap Casas(int size) {
+    static HashMap getCasas(int size) {
         HashMap<String, Integer> casas = new HashMap<String, Integer>();
         Random random = new Random();
         int rndmPrice = 0;
@@ -36,10 +36,13 @@ public class Taller4 {
 
         // Inicio los HashMap
         HashMap<String, Integer> ventas = new HashMap<String, Integer>();
-        HashMap<String, Integer> casas = Casas(10);
+        HashMap<String, Integer> casas = getCasas(10);
+        HashMap<String,Integer> numeroVentas=new HashMap<String, Integer>();
+
 
         for (String barrio : barrios) {
             ventas.put(barrio, 0);
+            numeroVentas.put(barrio, 0);
         }
 
         int userEntry = 0;
@@ -59,7 +62,7 @@ public class Taller4 {
                 int indiceAleatorio = new Random().nextInt(cantidadClaves);
 
                 String claveAleatoria = (String) claves.toArray()[indiceAleatorio];
-            
+
                 // Aqui inicia el juego
                 int randomBarrio = rnd.nextInt(barrios.length);
                 int price = casas.get(claveAleatoria);
@@ -82,21 +85,46 @@ public class Taller4 {
                         newVenta = (actualVenta + price) * 5;
                         ventas.replace(barrios[randomBarrio], newVenta);
 
+                        //Contador para saber cuantas ventas realizó
+                        int numActual=numeroVentas.get(barrios[randomBarrio]);
+                        int numNew=(numActual+1);
+                        numeroVentas.replace(barrios[randomBarrio], numNew);
+
                     } else if (barrios[randomBarrio] == "Belen") {
                         newVenta = (actualVenta + price) * 2;
                         ventas.replace(barrios[randomBarrio], newVenta);
+
+                        //Contador para saber cuantas ventas realizó
+                        int numActual=numeroVentas.get(barrios[randomBarrio]);
+                        int numNew=(numActual+1);
+                        numeroVentas.replace(barrios[randomBarrio], numNew);
 
                     } else if (barrios[randomBarrio] == "Conquistadores") {
                         newVenta = (actualVenta + price) * 6;
                         ventas.replace(barrios[randomBarrio], newVenta);
 
+                        //Contador para saber cuantas ventas realizó
+                        int numActual=numeroVentas.get(barrios[randomBarrio]);
+                        int numNew=(numActual+1);
+                        numeroVentas.replace(barrios[randomBarrio], numNew);
+
                     } else if (barrios[randomBarrio] == "Calasans") {
                         newVenta = (actualVenta + price) * 4;
                         ventas.replace(barrios[randomBarrio], newVenta);
 
+                        //Contador para saber cuantas ventas realizó
+                        int numActual=numeroVentas.get(barrios[randomBarrio]);
+                        int numNew=(numActual+1);
+                        numeroVentas.replace(barrios[randomBarrio], numNew);
+
                     } else {
                         newVenta = (actualVenta + price) * 3;
                         ventas.replace(barrios[randomBarrio], newVenta);
+
+                        //Contador para saber cuantas ventas realizó
+                        int numActual=numeroVentas.get(barrios[randomBarrio]);
+                        int numNew=(numActual+1);
+                        numeroVentas.replace(barrios[randomBarrio], numNew);
                     }
                 }
             } while (userEntry != 2);
@@ -104,12 +132,16 @@ public class Taller4 {
             System.out.println("se encontró una excepción");
         }
 
+        System.out.println();        
+
         // Muestra el reporte de las ventas
         System.out.println("Reporte de ventas:");
 
         for (String barrio : ventas.keySet()) {
             System.out.println(barrio + " vendió " + ventas.get(barrio) + " dólares");
         }
+
+        System.out.println();        
 
         // Para hallar el barrio que más dinero ganó
         String maxPrice = null;
@@ -124,6 +156,7 @@ public class Taller4 {
             }
         }
         System.out.println("El barrio que más dinero ganó fue " + maxPrice);
+      
 
         // Para hallar el barrio que menos dinero ganó
         String minPrice = null;
@@ -139,7 +172,20 @@ public class Taller4 {
         }
         System.out.println("El barrio que menos dinero ganó fue " + minPrice);
 
+        //Para saber cuál fue el barrio que más casas vendió
+        String barrioMaxVentas= null;
+        int maxVenta = Integer.MIN_VALUE;
+
+        for (String key : numeroVentas.keySet()) {
+            int value = ventas.get(key);
+
+            if (value > maxVenta) {
+                maxVenta = value;
+                barrioMaxVentas = key;
+            }
+        }
+        System.out.println("El barrio que más casas vendió fue " + barrioMaxVentas);
+
         scanner.close();
     }
-
 }
