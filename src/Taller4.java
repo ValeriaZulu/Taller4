@@ -45,7 +45,7 @@ public class Taller4 {
         System.out.println("Te doy la bienvenida a Tinder House");
         System.out.println("Esto consiste en hacer match con cada casa que quieras comprar");
         System.out.println("escribe 0 para descartar, 1 para comprar y 2 para terminar el juego");
-       
+
         try {
             do {
                 // Elegir una clave aleatoria
@@ -66,15 +66,36 @@ public class Taller4 {
                 userEntry = scanner.nextInt();
 
                 if (userEntry == 1) {
-                    int actualVenta = ventas.get(barrios[randomBarrio]);
-                    int newVenta = actualVenta + price;
-                    ventas.replace(barrios[randomBarrio], newVenta);
+                    int actualVenta;
+                    int newVenta;
+                    actualVenta = ventas.get(barrios[randomBarrio]);
+
+                    if (barrios[randomBarrio] == "Laureles") {
+                        newVenta = (actualVenta + price) * 5;
+                        ventas.replace(barrios[randomBarrio], newVenta);
+
+                    } else if (barrios[randomBarrio] == "Belen") {
+                        newVenta = (actualVenta + price) * 2;
+                        ventas.replace(barrios[randomBarrio], newVenta);
+
+                    } else if (barrios[randomBarrio] == "Conquistadores") {
+                        newVenta = (actualVenta + price) * 6;
+                        ventas.replace(barrios[randomBarrio], newVenta);
+                    } else if (barrios[randomBarrio] == "Calasans") {
+                        newVenta = (actualVenta + price) * 4;
+                        ventas.replace(barrios[randomBarrio], newVenta);
+                    } else {
+                        newVenta = (actualVenta + price) * 3;
+                        ventas.replace(barrios[randomBarrio], newVenta);
+
+                    }
+
                 }
 
             } while (userEntry != 2);
 
         } catch (Exception e) {
-            System.out.println("se encontró una excepción" );
+            System.out.println("se encontró una excepción");
         }
 
         System.out.println("Reporte de ventas:");
