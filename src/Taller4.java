@@ -9,7 +9,7 @@ public class Taller4 {
         HashMap<String, Integer> casas = new HashMap<String, Integer>();
         Random random = new Random();
         int rndmPrice = 0;
-       
+
         String[] prefijos = { "La", "El", "Un" };
         String[] mid = { "cabaña", "mansión", "castillo", "torre" };
         String[] suf = { "de la montaña", "del principe", "de marmol", "del bosque", "de la playa", "de la laguna" };
@@ -29,8 +29,8 @@ public class Taller4 {
 
     public static void main(String[] args) {
 
-        String[] barrios = {"Laureles","Belen","Conquistadores","Calasans","Floresta"};
-        
+        String[] barrios = { "Laureles", "Belen", "Conquistadores", "Calasans", "Floresta" };
+
         HashMap<String, Integer> ventas = new HashMap<String, Integer>();
         HashMap<String, Integer> casas = Casas(10);
 
@@ -38,45 +38,51 @@ public class Taller4 {
             ventas.put(barrio, 0);
         }
 
-    int userEntry=0;
-    Random rnd = new Random();
-    Scanner scanner = new Scanner(System.in);
+        int userEntry = 0;
+        Random rnd = new Random();
+        Scanner scanner = new Scanner(System.in);
 
-    System.out.println("Te doy la bienvenida a Tinder House");
-    System.out.println("Esto consiste en hacer match con cada casa que quieras comprar");
-    System.out.println("escribe 0 para descartar, 1 para comprar y 2 para terminar el juego");
+        System.out.println("Te doy la bienvenida a Tinder House");
+        System.out.println("Esto consiste en hacer match con cada casa que quieras comprar");
+        System.out.println("escribe 0 para descartar, 1 para comprar y 2 para terminar el juego");
+       
+        try {
+            do {
+                // Elegir una clave aleatoria
+                Set<String> claves = casas.keySet();
+                int cantidadClaves = claves.size();
+                int indiceAleatorio = new Random().nextInt(cantidadClaves);
 
-    do {
-            // Elegir una clave aleatoria
-            Set<String> claves = casas.keySet();
-            int cantidadClaves = claves.size();
-            int indiceAleatorio = new Random().nextInt(cantidadClaves);
+                String claveAleatoria = (String) claves.toArray()[indiceAleatorio];
+                // Aqui va el juego
 
-            String claveAleatoria = (String) claves.toArray()[indiceAleatorio];
-            // Aqui va el juego
+                int randomBarrio = rnd.nextInt(barrios.length);
+                int price = casas.get(claveAleatoria);
+                System.out.println("------*-------");
+                System.out.println(claveAleatoria);
+                System.out.println(barrios[randomBarrio]);
+                System.out.println(price + " dólares");
+                System.out.println("------*-------");
+                userEntry = scanner.nextInt();
 
-            int randomBarrio = rnd.nextInt(barrios.length);
-            int price = casas.get(claveAleatoria);
-            System.out.println("------*-------");
-            System.out.println(claveAleatoria);
-            System.out.println(barrios[randomBarrio]);
-            System.out.println(price + " dólares");
-            System.out.println("------*-------");
-            userEntry = scanner.nextInt();
+                if (userEntry == 1) {
+                    int actualVenta = ventas.get(barrios[randomBarrio]);
+                    int newVenta = actualVenta + price;
+                    ventas.replace(barrios[randomBarrio], newVenta);
+                }
 
-            if (userEntry==1) {
-                int actualVenta = ventas.get(barrios[randomBarrio]);
-                int newVenta = actualVenta + price;
-                ventas.replace(barrios[randomBarrio], newVenta);
-            }
+            } while (userEntry != 2);
 
-        } while (userEntry != 2);
+        } catch (Exception e) {
+            System.out.println("se encontró una excepción" );
+        }
 
         System.out.println("Reporte de ventas:");
 
         for (String barrio : ventas.keySet()) {
-            System.out.println(barrio + " vendió " + ventas.get(barrio));
-  }
-}
+            System.out.println(barrio + " vendió " + ventas.get(barrio) + " dólares");
+        }
+        scanner.close();
+    }
 
 }
