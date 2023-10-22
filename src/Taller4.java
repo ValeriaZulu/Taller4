@@ -1,3 +1,4 @@
+
 import java.util.HashMap;
 import java.util.Random;
 import java.util.Scanner;
@@ -5,6 +6,7 @@ import java.util.Set;
 
 public class Taller4 {
 
+    // Función para generar los nombres de las casas y precios
     static HashMap Casas(int size) {
         HashMap<String, Integer> casas = new HashMap<String, Integer>();
         Random random = new Random();
@@ -29,8 +31,10 @@ public class Taller4 {
 
     public static void main(String[] args) {
 
+        // Lista de barrios
         String[] barrios = { "Laureles", "Belen", "Conquistadores", "Calasans", "Floresta" };
 
+        // Inicio los HashMap
         HashMap<String, Integer> ventas = new HashMap<String, Integer>();
         HashMap<String, Integer> casas = Casas(10);
 
@@ -46,6 +50,7 @@ public class Taller4 {
         System.out.println("Esto consiste en hacer match con cada casa que quieras comprar");
         System.out.println("escribe 0 para descartar, 1 para comprar y 2 para terminar el juego");
 
+        // manejo de errores
         try {
             do {
                 // Elegir una clave aleatoria
@@ -54,8 +59,8 @@ public class Taller4 {
                 int indiceAleatorio = new Random().nextInt(cantidadClaves);
 
                 String claveAleatoria = (String) claves.toArray()[indiceAleatorio];
-                // Aqui va el juego
-
+            
+                // Aqui inicia el juego
                 int randomBarrio = rnd.nextInt(barrios.length);
                 int price = casas.get(claveAleatoria);
                 System.out.println("------*-------");
@@ -65,11 +70,14 @@ public class Taller4 {
                 System.out.println("------*-------");
                 userEntry = scanner.nextInt();
 
+                // Se guardan los valores si el usuario ingresa "1"
                 if (userEntry == 1) {
                     int actualVenta;
                     int newVenta;
                     actualVenta = ventas.get(barrios[randomBarrio]);
 
+                    // Las ventas de cada barrio se multiplica por el peso respectivo
+                    // Laureles (5), Belen(2), Conquistadores(6), Calasans(4), Floresta(3)
                     if (barrios[randomBarrio] == "Laureles") {
                         newVenta = (actualVenta + price) * 5;
                         ventas.replace(barrios[randomBarrio], newVenta);
@@ -81,28 +89,56 @@ public class Taller4 {
                     } else if (barrios[randomBarrio] == "Conquistadores") {
                         newVenta = (actualVenta + price) * 6;
                         ventas.replace(barrios[randomBarrio], newVenta);
+
                     } else if (barrios[randomBarrio] == "Calasans") {
                         newVenta = (actualVenta + price) * 4;
                         ventas.replace(barrios[randomBarrio], newVenta);
+
                     } else {
                         newVenta = (actualVenta + price) * 3;
                         ventas.replace(barrios[randomBarrio], newVenta);
-
                     }
-
                 }
-
             } while (userEntry != 2);
-
         } catch (Exception e) {
             System.out.println("se encontró una excepción");
         }
 
+        // Muestra el reporte de las ventas
         System.out.println("Reporte de ventas:");
 
         for (String barrio : ventas.keySet()) {
             System.out.println(barrio + " vendió " + ventas.get(barrio) + " dólares");
         }
+
+        // Para hallar el barrio que más dinero ganó
+        String maxPrice = null;
+        int maxValue = Integer.MIN_VALUE;
+
+        for (String key : ventas.keySet()) {
+            int value = ventas.get(key);
+
+            if (value > maxValue) {
+                maxValue = value;
+                maxPrice = key;
+            }
+        }
+        System.out.println("El barrio que más dinero ganó fue " + maxPrice);
+
+        // Para hallar el barrio que menos dinero ganó
+        String minPrice = null;
+        int minValue = Integer.MAX_VALUE;
+
+        for (String key : ventas.keySet()) {
+            int value = ventas.get(key);
+
+            if (value < minValue) {
+                minValue = value;
+                minPrice = key;
+            }
+        }
+        System.out.println("El barrio que menos dinero ganó fue " + minPrice);
+
         scanner.close();
     }
 
